@@ -1,0 +1,422 @@
+<!DOCTYPE html><html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">  <title>PizdukVPN</title>
+  <meta name="description" content="PizdukVPN — VPN-подписки и конфигурации">  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, #202020 0%, #0d0d0d 45%, #050505 100%);
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: min(100% - 32px, 900px);
+      margin: auto;
+    }
+
+    header {
+      padding: 55px 0 30px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 85px;
+      height: 85px;
+      margin: auto;
+      border-radius: 24px;
+      background: linear-gradient(135deg, #ffffff, #777);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 42px;
+      color: #111;
+      box-shadow: 0 15px 50px rgba(255,255,255,.12);
+    }
+
+    h1 {
+      margin-top: 20px;
+      font-size: 42px;
+    }
+
+    .subtitle {
+      margin-top: 10px;
+      color: #aaa;
+      font-size: 17px;
+    }
+
+    .telegram {
+      display: inline-block;
+      margin-top: 22px;
+      padding: 12px 20px;
+      border-radius: 14px;
+      background: #fff;
+      color: #111;
+      text-decoration: none;
+      font-weight: bold;
+      transition: .2s;
+    }
+
+    .telegram:hover {
+      transform: translateY(-2px);
+    }
+
+    section {
+      margin: 25px 0;
+    }
+
+    .section-title {
+      margin-bottom: 15px;
+      font-size: 25px;
+    }
+
+    .card {
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 22px;
+      padding: 22px;
+      margin-bottom: 15px;
+      backdrop-filter: blur(12px);
+    }
+
+    .card h3 {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: #aaa;
+      line-height: 1.5;
+      margin-bottom: 17px;
+    }
+
+    .buttons {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    button,
+    .button {
+      border: none;
+      border-radius: 13px;
+      padding: 13px 17px;
+      font-size: 15px;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+      background: #fff;
+      color: #111;
+      transition: .2s;
+    }
+
+    button:hover,
+    .button:hover {
+      transform: translateY(-2px);
+      opacity: .9;
+    }
+
+    .secondary {
+      background: #292929;
+      color: #fff;
+    }
+
+    .subscription {
+      font-size: 12px;
+      color: #777;
+      word-break: break-all;
+      margin-top: 12px;
+      padding: 10px;
+      border-radius: 10px;
+      background: rgba(0,0,0,.3);
+    }
+
+    .step {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 18px;
+      align-items: flex-start;
+    }
+
+    .number {
+      min-width: 35px;
+      height: 35px;
+      border-radius: 50%;
+      background: #fff;
+      color: #111;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+    }
+
+    .step-text {
+      color: #bbb;
+      line-height: 1.5;
+    }
+
+    footer {
+      text-align: center;
+      padding: 40px 0 30px;
+      color: #666;
+      font-size: 14px;
+    }
+
+    .notice {
+      padding: 15px;
+      border-radius: 15px;
+      background: rgba(255,255,255,.05);
+      color: #aaa;
+      line-height: 1.5;
+      margin-top: 15px;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 34px;
+      }
+
+      .container {
+        width: min(100% - 22px, 900px);
+      }
+
+      .card {
+        padding: 18px;
+      }
+
+      button,
+      .button {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style></head><body><div class="container">  <header>
+    <div class="logo">🛡️</div><h1>PizdukVPN</h1>
+
+<p class="subtitle">
+  VPN-подписки и конфигурации
+</p>
+
+<a class="telegram" href="https://t.me/PizMod" target="_blank">
+  📢 Telegram @PizMod
+</a>
+
+  </header>  <section><h2 class="section-title">📡 Подписки</h2>
+
+<div class="card">
+  <h3>🏴 PizdukVPN ЧС</h3>
+
+  <p>
+    Основная подписка с конфигурациями.
+  </p>
+
+  <div class="buttons">
+    <button onclick="copySub('https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/sub.txt')">
+      📋 Скопировать
+    </button>
+
+    <a class="button secondary"
+       href="https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/sub.txt"
+       target="_blank">
+      🔗 Открыть
+    </a>
+  </div>
+
+  <div class="subscription">
+    https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/sub.txt
+  </div>
+</div>
+
+
+<div class="card">
+  <h3>🏴📲 ЧС-Автовыбор</h3>
+
+  <p>
+    Автоматический выбор конфигураций.
+  </p>
+
+  <div class="buttons">
+    <button onclick="copySub('https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/AutoPizduk.txt')">
+      📋 Скопировать
+    </button>
+
+    <a class="button secondary"
+       href="https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/AutoPizduk.txt"
+       target="_blank">
+      🔗 Открыть
+    </a>
+  </div>
+
+  <div class="subscription">
+    https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/AutoPizduk.txt
+  </div>
+</div>
+
+
+<div class="card">
+  <h3>🏳📲 БС-АвтоВыбор</h3>
+
+  <p>
+    Автоматическая подписка с конфигурациями БС.
+  </p>
+
+  <div class="buttons">
+    <button onclick="copySub('https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/WLAutoPiz.txt')">
+      📋 Скопировать
+    </button>
+
+    <a class="button secondary"
+       href="https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/WLAutoPiz.txt"
+       target="_blank">
+      🔗 Открыть
+    </a>
+  </div>
+
+  <div class="subscription">
+    https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/WLAutoPiz.txt
+  </div>
+</div>
+
+
+<div class="card">
+  <h3>🔀 PizdukVPN Миксер</h3>
+
+  <p>
+    Объединённая подписка. Собирает конфигурации из других подписок в один список.
+  </p>
+
+  <div class="buttons">
+    <button onclick="copySub('https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/Mixer')">
+      📋 Скопировать
+    </button>
+
+    <a class="button secondary"
+       href="https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/Mixer"
+       target="_blank">
+      🔗 Открыть
+    </a>
+  </div>
+
+  <div class="subscription">
+    https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/Mixer
+  </div>
+</div>
+
+  </section>  <section><h2 class="section-title">📱 Как подключить</h2>
+
+<div class="card">
+
+  <div class="step">
+    <div class="number">1</div>
+
+    <div class="step-text">
+      Установите подходящий VPN-клиент, например Happ или V2RayTun.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="number">2</div>
+
+    <div class="step-text">
+      Выберите нужную подписку выше и нажмите «Скопировать».
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="number">3</div>
+
+    <div class="step-text">
+      Добавьте скопированную ссылку в разделе подписок вашего клиента.
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="number">4</div>
+
+    <div class="step-text">
+      Обновите подписку и выберите рабочую конфигурацию.
+    </div>
+  </div>
+
+</div>
+
+  </section>  <section><h2 class="section-title">📲 Приложения</h2>
+
+<div class="card">
+
+  <h3>Happ</h3>
+
+  <p>
+    Клиент для работы с VPN-подписками.
+  </p>
+
+  <a class="button"
+     href="https://play.google.com/store/search?q=Happ%20VPN&c=apps"
+     target="_blank">
+    Открыть Google Play
+  </a>
+
+</div>
+
+
+<div class="card">
+
+  <h3>V2RayTun</h3>
+
+  <p>
+    Ещё один клиент для подключения к конфигурациям.
+  </p>
+
+  <a class="button"
+     href="https://play.google.com/store/search?q=V2RayTun&c=apps"
+     target="_blank">
+    Открыть Google Play
+  </a>
+
+</div>
+
+  </section>  <section><div class="card">
+
+  <h3>💬 Нужна помощь?</h3>
+
+  <p>
+    Если подписка не работает или конфигурация не импортируется,
+    напишите в Telegram.
+  </p>
+
+  <a class="button"
+     href="https://t.me/Harachok"
+     target="_blank">
+    💬 Написать в поддержку
+  </a>
+
+</div>
+
+  </section>  <div class="notice">
+    ⚠️ Конфигурации могут переставать работать.
+    При проблемах попробуйте обновить подписку или выбрать другую конфигурацию.
+  </div>  <footer>
+    PizdukVPN © 2026<br>
+    <a href="https://t.me/PizMod"
+       target="_blank"
+       style="color:#888;">
+      Telegram @PizMod
+    </a>
+  </footer></div><script>
+  function copySub(text) {
+    navigator.clipboard.writeText(text).then(() => {
+      alert("✅ Ссылка скопирована!");
+    }).catch(() => {
+      prompt("Скопируйте ссылку:", text);
+    });
+  }
+</script></body>
+</html>
