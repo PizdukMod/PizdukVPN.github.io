@@ -1,1212 +1,356 @@
-<!DOCTYPE html><html lang="ru">
+<!DOCTYPE html>
+<html lang="ru">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0"><title>PizdukVPN</title>
-<meta name="description" content="PizdukVPN — VPN-подписки и конфигурации"><style>
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
-
-:root {
-    --bg: #070707;
-    --card: rgba(255,255,255,.055);
-    --border: rgba(255,255,255,.10);
-    --text: #ffffff;
-    --muted: #929292;
-    --soft: #cfcfcf;
-    --accent: #ffffff;
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-html {
-    scroll-behavior: smooth;
-}
-
-body {
-    min-height: 100vh;
-    overflow-x: hidden;
-
-    font-family: Inter, Arial, sans-serif;
-    color: var(--text);
-
-    background:
-        radial-gradient(
-            circle at 50% -10%,
-            rgba(255,255,255,.12),
-            transparent 35%
-        ),
-        radial-gradient(
-            circle at 0% 50%,
-            rgba(120,120,120,.08),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 100% 80%,
-            rgba(255,255,255,.05),
-            transparent 30%
-        ),
-        var(--bg);
-}
-
-/* BACKGROUND */
-
-.background {
-    position: fixed;
-    inset: 0;
-    pointer-events: none;
-    overflow: hidden;
-    z-index: -1;
-}
-
-.orb {
-    position: absolute;
-    width: 260px;
-    height: 260px;
-    border-radius: 50%;
-    filter: blur(100px);
-    opacity: .08;
-    animation: orbMove 12s ease-in-out infinite alternate;
-}
-
-.orb.one {
-    background: white;
-    top: 10%;
-    left: -100px;
-}
-
-.orb.two {
-    background: #aaa;
-    right: -100px;
-    bottom: 15%;
-    animation-delay: -4s;
-}
-
-@keyframes orbMove {
-    from {
-        transform: translate3d(0,0,0);
-    }
-
-    to {
-        transform: translate3d(60px,-40px,0);
-    }
-}
-
-/* CONTAINER */
-
-.container {
-    width: min(100% - 28px, 940px);
-    margin: auto;
-}
-
-/* HEADER */
-
-header {
-    text-align: center;
-    padding: 75px 0 55px;
-}
-
-.logo {
-    width: 96px;
-    height: 96px;
-    margin: auto;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 28px;
-
-    background:
-        linear-gradient(
-            145deg,
-            #ffffff,
-            #858585
-        );
-
-    color: #080808;
-    font-size: 46px;
-
-    box-shadow:
-        0 0 0 1px rgba(255,255,255,.2),
-        0 20px 60px rgba(0,0,0,.45),
-        0 0 60px rgba(255,255,255,.10);
-
-    animation:
-        logoFloat 5s ease-in-out infinite,
-        logoPulse 3s ease-in-out infinite alternate;
-}
-
-@keyframes logoFloat {
-    0%,100% {
-        transform: translateY(0) rotate(0);
-    }
-
-    50% {
-        transform: translateY(-9px) rotate(2deg);
-    }
-}
-
-@keyframes logoPulse {
-    from {
-        box-shadow:
-            0 0 0 1px rgba(255,255,255,.15),
-            0 20px 60px rgba(0,0,0,.45);
-    }
-
-    to {
-        box-shadow:
-            0 0 0 1px rgba(255,255,255,.25),
-            0 20px 70px rgba(0,0,0,.45),
-            0 0 50px rgba(255,255,255,.12);
-    }
-}
-
-h1 {
-    margin-top: 25px;
-
-    font-size: clamp(40px, 9vw, 64px);
-    font-weight: 800;
-    letter-spacing: -3px;
-
-    background:
-        linear-gradient(
-            90deg,
-            #ffffff,
-            #888888,
-            #ffffff
-        );
-
-    background-size: 200% auto;
-
-    color: transparent;
-    background-clip: text;
-
-    animation: titleGradient 5s linear infinite;
-}
-
-@keyframes titleGradient {
-    to {
-        background-position: 200% center;
-    }
-}
-
-.subtitle {
-    margin-top: 13px;
-
-    color: var(--muted);
-    font-size: 16px;
-}
-
-.telegram-button {
-    display: inline-flex;
-    align-items: center;
-    gap: 9px;
-
-    margin-top: 27px;
-
-    padding: 13px 20px;
-
-    border-radius: 14px;
-
-    color: #111;
-    background: #fff;
-
-    text-decoration: none;
-    font-size: 14px;
-    font-weight: 700;
-
-    transition:
-        transform .25s,
-        box-shadow .25s;
-}
-
-.telegram-button:hover {
-    transform: translateY(-4px);
-    box-shadow:
-        0 12px 35px rgba(255,255,255,.14);
-}
-
-/* SECTION */
-
-section {
-    margin-bottom: 42px;
-}
-
-.section-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    margin-bottom: 17px;
-}
-
-.section-title {
-    font-size: 25px;
-    font-weight: 700;
-    letter-spacing: -.5px;
-}
-
-.section-line {
-    flex: 1;
-    height: 1px;
-    margin-left: 18px;
-
-    background:
-        linear-gradient(
-            90deg,
-            rgba(255,255,255,.15),
-            transparent
-        );
-}
-
-/* CARDS */
-
-.card {
-    position: relative;
-
-    padding: 23px;
-
-    margin-bottom: 14px;
-
-    border-radius: 22px;
-
-    background:
-        linear-gradient(
-            145deg,
-            rgba(255,255,255,.075),
-            rgba(255,255,255,.025)
-        );
-
-    border: 1px solid var(--border);
-
-    box-shadow:
-        0 15px 50px rgba(0,0,0,.18);
-
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-
-    transition:
-        transform .3s ease,
-        border-color .3s ease,
-        box-shadow .3s ease;
-
-    animation: cardAppear .7s ease both;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-
-    border-color:
-        rgba(255,255,255,.22);
-
-    box-shadow:
-        0 20px 60px rgba(0,0,0,.30),
-        0 0 35px rgba(255,255,255,.025);
-}
-
-@keyframes cardAppear {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* маленькое свечение внутри карточки */
-
-.card::after {
-    content: "";
-
-    position: absolute;
-
-    width: 140px;
-    height: 140px;
-
-    top: -80px;
-    right: -70px;
-
-    border-radius: 50%;
-
-    background: rgba(255,255,255,.08);
-
-    filter: blur(35px);
-
-    pointer-events: none;
-}
-
-/* CARD CONTENT */
-
-.card-top {
-    display: flex;
-    align-items: flex-start;
-    gap: 15px;
-}
-
-.icon {
-    min-width: 45px;
-    height: 45px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 14px;
-
-    background: rgba(255,255,255,.08);
-
-    font-size: 21px;
-
-    border: 1px solid rgba(255,255,255,.08);
-}
-
-.card-info {
-    flex: 1;
-}
-
-.card h3 {
-    font-size: 18px;
-    font-weight: 700;
-}
-
-.card p {
-    margin-top: 7px;
-
-    color: var(--muted);
-
-    font-size: 14px;
-    line-height: 1.55;
-}
-
-/* COPY BUTTON */
-
-.copy-button {
-    width: 100%;
-
-    margin-top: 19px;
-
-    padding: 14px;
-
-    border: 1px solid rgba(255,255,255,.08);
-    border-radius: 13px;
-
-    background: rgba(255,255,255,.09);
-    color: white;
-
-    font-family: inherit;
-    font-size: 14px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-        background .2s,
-        transform .2s,
-        border-color .2s;
-}
-
-.copy-button:hover {
-    background: rgba(255,255,255,.16);
-    border-color: rgba(255,255,255,.18);
-    transform: translateY(-2px);
-}
-
-.copy-button:active {
-    transform: scale(.98);
-}
-
-.copy-button.copied {
-    background: white;
-    color: #111;
-}
-
-/* STEPS */
-
-.steps {
-    display: grid;
-    gap: 11px;
-}
-
-.step {
-    display: flex;
-    gap: 15px;
-    align-items: center;
-
-    padding: 17px;
-
-    border-radius: 17px;
-
-    background: rgba(255,255,255,.035);
-    border: 1px solid rgba(255,255,255,.06);
-
-    transition: .25s;
-}
-
-.step:hover {
-    background: rgba(255,255,255,.065);
-    transform: translateX(4px);
-}
-
-.step-number {
-    min-width: 35px;
-    height: 35px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    border-radius: 11px;
-
-    background: white;
-    color: #111;
-
-    font-size: 13px;
-    font-weight: 800;
-}
-
-.step-text {
-    color: #aaa;
-
-    font-size: 14px;
-    line-height: 1.5;
-}
-
-/* APP BUTTONS */
-
-.apps {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-}
-
-.app-card {
-    padding: 20px;
-
-    border-radius: 20px;
-
-    background: rgba(255,255,255,.045);
-    border: 1px solid rgba(255,255,255,.08);
-
-    transition: .3s;
-}
-
-.app-card:hover {
-    transform: translateY(-5px);
-    background: rgba(255,255,255,.07);
-}
-
-.app-icon {
-    font-size: 28px;
-}
-
-.app-card h3 {
-    margin-top: 12px;
-    font-size: 17px;
-}
-
-.app-card p {
-    margin-top: 7px;
-
-    color: var(--muted);
-
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-.app-link {
-    display: inline-block;
-
-    margin-top: 15px;
-
-    color: white;
-
-    font-size: 13px;
-    font-weight: 600;
-
-    text-decoration: none;
-}
-
-.app-link:hover {
-    text-decoration: underline;
-}
-
-/* SUPPORT */
-
-.support {
-    text-align: center;
-
-    padding: 35px 22px;
-}
-
-.support-icon {
-    font-size: 34px;
-}
-
-.support h2 {
-    margin-top: 13px;
-}
-
-.support p {
-    max-width: 500px;
-    margin: 9px auto 20px;
-}
-
-.support-button {
-    display: inline-flex;
-    padding: 13px 20px;
-
-    border-radius: 13px;
-
-    background: white;
-    color: #111;
-
-    text-decoration: none;
-
-    font-size: 14px;
-    font-weight: 700;
-
-    transition: .25s;
-}
-
-.support-button:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 10px 30px rgba(255,255,255,.12);
-}
-
-/* NOTICE */
-
-.notice {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-
-    padding: 17px;
-
-    border-radius: 17px;
-
-    color: #999;
-
-    background: rgba(255,255,255,.035);
-    border: 1px solid rgba(255,255,255,.06);
-
-    font-size: 13px;
-    line-height: 1.5;
-}
-
-.notice-icon {
-    font-size: 17px;
-}
-
-/* FOOTER */
-
-footer {
-    padding: 50px 0 35px;
-
-    text-align: center;
-
-    color: #555;
-
-    font-size: 12px;
-}
-
-footer a {
-    color: #777;
-    text-decoration: none;
-}
-
-footer a:hover {
-    color: white;
-}
-
-/* TOAST */
-
-.toast {
-    position: fixed;
-
-    left: 50%;
-    bottom: 25px;
-
-    z-index: 1000;
-
-    transform:
-        translate(-50%, 100px);
-
-    opacity: 0;
-
-    padding: 13px 18px;
-
-    border-radius: 13px;
-
-    background: white;
-    color: #111;
-
-    font-size: 13px;
-    font-weight: 700;
-
-    box-shadow:
-        0 15px 50px rgba(0,0,0,.45);
-
-    pointer-events: none;
-
-    transition:
-        opacity .3s,
-        transform .3s;
-}
-
-.toast.show {
-    opacity: 1;
-
-    transform:
-        translate(-50%, 0);
-}
-
-/* MOBILE */
-
-@media (max-width: 650px) {
-
-    .container {
-        width: min(100% - 20px, 940px);
-    }
-
-    header {
-        padding-top: 55px;
-    }
-
-    .logo {
-        width: 82px;
-        height: 82px;
-        border-radius: 24px;
-        font-size: 39px;
-    }
-
-    h1 {
-        font-size: 43px;
-        letter-spacing: -2px;
-    }
-
-    .section-title {
-        font-size: 22px;
-    }
-
-    .card {
-        padding: 18px;
-        border-radius: 20px;
-    }
-
-    .apps {
-        grid-template-columns: 1fr;
-    }
-
-    .step {
-        padding: 15px;
-    }
-}
-
-/* REDUCE MOTION */
-
-@media (prefers-reduced-motion: reduce) {
-
-    *,
-    *::before,
-    *::after {
-        animation-duration: .01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: .01ms !important;
-    }
-}
-</style></head><body><div class="background">
-    <div class="orb one"></div>
-    <div class="orb two"></div>
-</div><div class="container"><header><div class="logo">
-    🛡️
-</div>
-
-<h1>PizdukVPN</h1>
-
-<p class="subtitle">
-    Быстрые конфигурации. Простое подключение.
-</p>
-
-<a
-    class="telegram-button"
-    href="https://t.me/PizMod"
-    target="_blank"
-    rel="noopener"
->
-    📢 Telegram
-    <span>@PizMod</span>
-</a>
-
-</header><!-- SUBSCRIPTIONS --><section><div class="section-header">
-    <h2 class="section-title">
-        📡 Подписки
-    </h2>
-
-    <div class="section-line"></div>
-</div>
-
-
-<div class="card">
-
-    <div class="card-top">
-
-        <div class="icon">
-            🏴
-        </div>
-
-        <div class="card-info">
-
-            <h3>
-                PizdukVPN ЧС
-            </h3>
-
-            <p>
-                Основная подписка с конфигурациями.
-            </p>
-
-        </div>
-
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PizdukVPN</title>
+<meta name="description" content="PizdukVPN — VPN-подписки и конфигурации">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0a0c10;
+    --bg-2:#0d1016;
+    --line:#3fd0ff;
+    --line-dim: rgba(63,208,255,.35);
+    --ink:#eef3f7;
+    --ink-dim:#8993a1;
+    --card: rgba(255,255,255,.03);
+    --card-line: rgba(255,255,255,.08);
+    --radius: 16px;
+  }
+  :root:not([data-theme="light"]){ }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{
+    scroll-padding-top: env(safe-area-inset-top,0px);
+  }
+  body{
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter',system-ui,sans-serif;
+    min-height:100%;
+    padding-top:env(safe-area-inset-top,0px);
+    padding-bottom:env(safe-area-inset-bottom,0px);
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+  h1,h2,h3{font-family:'Space Grotesk',system-ui,sans-serif;}
+
+  /* subtle network-grid backdrop */
+  .grid-bg{
+    position:fixed;inset:0;z-index:-1;pointer-events:none;
+    background-image:
+      linear-gradient(rgba(63,208,255,.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(63,208,255,.05) 1px, transparent 1px);
+    background-size:42px 42px;
+    mask-image:radial-gradient(ellipse 70% 55% at 50% 0%, black 10%, transparent 75%);
+  }
+
+  .wrap{width:min(100% - 32px, 640px);margin:0 auto;}
+
+  /* HERO */
+  header{padding:56px 0 40px;text-align:center;}
+  .mark{
+    width:56px;height:56px;margin:0 auto 22px;
+    border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    border:1px solid var(--line-dim);
+    position:relative;
+  }
+  .mark svg{width:26px;height:26px;stroke:var(--line);}
+  .mark::after{
+    content:"";position:absolute;inset:-1px;border-radius:15px;
+    box-shadow:0 0 24px rgba(63,208,255,.25);
+  }
+  h1{
+    font-size:clamp(32px,8vw,42px);
+    font-weight:700;
+    letter-spacing:-1px;
+  }
+  .lede{
+    color:var(--ink-dim);
+    font-size:15px;
+    margin-top:10px;
+  }
+  .tg{
+    display:inline-flex;align-items:center;gap:8px;
+    margin-top:24px;padding:11px 18px;
+    border:1px solid var(--card-line);
+    border-radius:11px;
+    color:var(--ink);text-decoration:none;
+    font-size:13px;font-weight:600;
+    transition:border-color .2s, background .2s;
+  }
+  .tg:hover{border-color:var(--line-dim);background:rgba(63,208,255,.06);}
+  .tg .dot{width:6px;height:6px;border-radius:50%;background:var(--line);}
+
+  /* SECTIONS */
+  section{margin-top:44px;}
+  .section-head{
+    display:flex;align-items:baseline;gap:12px;
+    margin-bottom:14px;
+  }
+  .section-head h2{font-size:15px;font-weight:600;color:var(--ink-dim);}
+  .section-head .rule{flex:1;height:1px;background:var(--card-line);}
+
+  /* SUBSCRIPTION LIST */
+  .sub-list{display:flex;flex-direction:column;gap:10px;}
+  .sub{
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    background:var(--card);
+    padding:18px;
+    display:flex;
+    align-items:center;
+    gap:14px;
+  }
+  .sub-info{flex:1;min-width:0;}
+  .sub-info h3{font-size:15px;font-weight:600;}
+  .sub-info p{font-size:12.5px;color:var(--ink-dim);margin-top:3px;}
+  .sub-actions{display:flex;align-items:center;gap:10px;flex-shrink:0;}
+  .copy-btn{
+    padding:9px 14px;
+    border-radius:9px;
+    border:1px solid var(--card-line);
+    background:transparent;
+    color:var(--ink);
+    font:inherit;font-size:12.5px;font-weight:600;
+    cursor:pointer;
+    white-space:nowrap;
+    transition:border-color .2s, background .2s, color .2s;
+  }
+  .copy-btn:hover{border-color:var(--line-dim);background:rgba(63,208,255,.08);}
+  .copy-btn.copied{background:var(--line);border-color:var(--line);color:#03131a;}
+  .alt-link{
+    font-size:11.5px;color:var(--ink-dim);
+    text-decoration:underline;text-underline-offset:2px;
+    background:none;border:none;cursor:pointer;font-family:inherit;
+    padding:4px;
+    flex-shrink:0;
+  }
+  .alt-link:hover{color:var(--line);}
+
+  /* CONNECT — compact, one card, no per-step buttons */
+  .connect-card{
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    background:var(--card);
+    padding:20px;
+  }
+  .connect-steps{
+    display:flex;flex-direction:column;gap:0;
+  }
+  .connect-steps li{
+    list-style:none;
+    display:flex;gap:12px;
+    padding:10px 0;
+    font-size:13.5px;
+    color:var(--ink-dim);
+    border-bottom:1px solid var(--card-line);
+  }
+  .connect-steps li:last-child{border-bottom:none;padding-bottom:0;}
+  .connect-steps li:first-child{padding-top:0;}
+  .connect-steps b{color:var(--ink);font-weight:500;}
+  .step-i{color:var(--line);font-family:'Space Grotesk';font-weight:600;font-size:13px;flex-shrink:0;}
+
+  /* APPS — inline row, no big buttons */
+  .apps-row{display:flex;gap:10px;flex-wrap:wrap;}
+  .app-chip{
+    flex:1;min-width:140px;
+    display:flex;align-items:center;gap:10px;
+    border:1px solid var(--card-line);
+    border-radius:12px;
+    padding:13px 15px;
+    text-decoration:none;
+    color:var(--ink);
+    transition:border-color .2s, background .2s;
+  }
+  .app-chip:hover{border-color:var(--line-dim);background:rgba(63,208,255,.06);}
+  .app-chip span.name{font-size:13.5px;font-weight:600;}
+  .app-chip span.arrow{margin-left:auto;color:var(--ink-dim);font-size:14px;}
+
+  /* SUPPORT — single line, no separate button block */
+  .support-line{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:14px;
+    border:1px solid var(--card-line);
+    border-radius:var(--radius);
+    background:var(--card);
+    padding:18px 20px;
+  }
+  .support-line p{font-size:13px;color:var(--ink-dim);}
+  .support-line a{
+    color:var(--line);text-decoration:none;font-size:13px;font-weight:600;
+    white-space:nowrap;
+  }
+  .support-line a:hover{text-decoration:underline;}
+
+  .notice{
+    margin-top:18px;
+    font-size:12px;color:var(--ink-dim);
+    text-align:center;
+    padding:0 8px;
+  }
+
+  footer{
+    margin-top:50px;padding:30px 0 40px;
+    text-align:center;font-size:11.5px;color:#4a5158;
+  }
+  footer a{color:#6b7480;text-decoration:none;}
+  footer a:hover{color:var(--ink-dim);}
+
+  .toast{
+    position:fixed;left:50%;bottom:max(24px, env(safe-area-inset-bottom,0px) + 14px);
+    transform:translate(-50%,80px);opacity:0;
+    background:var(--line);color:#03131a;
+    padding:11px 16px;border-radius:10px;
+    font-size:12.5px;font-weight:600;
+    box-shadow:0 12px 40px rgba(0,0,0,.5);
+    transition:opacity .25s, transform .25s;
+    pointer-events:none;
+  }
+  .toast.show{opacity:1;transform:translate(-50%,0);}
+
+  @media (max-width:520px){
+    .sub{flex-direction:column;align-items:stretch;}
+    .sub-actions{width:100%;justify-content:space-between;}
+    .copy-btn{flex:1;}
+    .support-line{flex-direction:column;align-items:flex-start;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{transition-duration:.01ms !important;}
+  }
+</style>
+</head>
+<body>
+<div class="grid-bg"></div>
+<div class="wrap">
+
+  <header>
+    <div class="mark">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 5v6c0 5 3.4 8.7 8 11 4.6-2.3 8-6 8-11V5l-8-3Z"/></svg>
     </div>
-
-    <button
-        class="copy-button"
-        onclick="copySub(this, 'https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/sub.txt')"
-    >
-        📋 Скопировать подписку
-    </button>
-
-</div>
-
-
-<div class="card">
-
-    <div class="card-top">
-
-        <div class="icon">
-            🏴📲
-        </div>
-
-        <div class="card-info">
-
-            <h3>
-                ЧС-Автовыбор
-            </h3>
-
-            <p>
-                Автоматический выбор конфигураций.
-            </p>
-
-        </div>
-
-    </div>
-
-    <button
-        class="copy-button"
-        onclick="copySub(this, 'https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/AutoPizduk.txt')"
-    >
-        📋 Скопировать подписку
-    </button>
-
-</div>
-
-
-<div class="card">
-
-    <div class="card-top">
-
-        <div class="icon">
-            🔄
-        </div>
-
-        <div class="card-info">
-
-            <h3>
-                ЧС-Автовыбор (Альт)
-            </h3>
-
-            <p>
-                Для тех, у кого не работает обычная ссылка.
-            </p>
-
-        </div>
-
-    </div>
-
-    <button
-        class="copy-button"
-        onclick="copySub(this, 'https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/BaHapp')"
-    >
-        📋 Скопировать альтернативную
-    </button>
-
-</div>
-
-
-<div class="card">
-
-    <div class="card-top">
-
-        <div class="icon">
-            🏳️📲
-        </div>
-
-        <div class="card-info">
-
-            <h3>
-                БС-АвтоВыбор
-            </h3>
-
-            <p>
-                Автоматическая подписка с конфигурациями БС.
-            </p>
-
-        </div>
-
-    </div>
-
-    <button
-        class="copy-button"
-        onclick="copySub(this, 'https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/WLAutoPiz.txt')"
-    >
-        📋 Скопировать подписку
-    </button>
-
-</div>
-
-
-<div class="card">
-
-    <div class="card-top">
-
-        <div class="icon">
-            🔄
-        </div>
-
-        <div class="card-info">
-
-            <h3>
-                БС-АвтоВыбор (Альт)
-            </h3>
-
-            <p>
-                Для тех, у кого не работает обычная ссылка.
-            </p>
-
-        </div>
-
-    </div>
-
-    <button
-        class="copy-button"
-        onclick="copySub(this, 'https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/WaHapp')"
-    >
-        📋 Скопировать альтернативную
-    </button>
-
-</div>
-
-
-<div class="card">
-
-    <div class="card-top">
-
-        <div class="icon">
-            🔀
-        </div>
-
-        <div class="card-info">
-
-            <h3>
-                PizdukVPN Миксер
-            </h3>
-
-            <p>
-                Объединяет конфигурации из других подписок в один список.
-            </p>
-
-        </div>
-
-    </div>
-
-    <button
-        class="copy-button"
-        onclick="copySub(this, 'https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/Mixer')"
-    >
-        📋 Скопировать подписку
-    </button>
-
-</div>
-
-</section><!-- INSTRUCTIONS --><section><div class="section-header">
-
-    <h2 class="section-title">
-        📱 Как подключиться
-    </h2>
-
-    <div class="section-line"></div>
-
-</div>
-
-
-<div class="card">
-
-    <div class="steps">
-
-        <div class="step">
-
-            <div class="step-number">
-                1
-            </div>
-
-            <div class="step-text">
-                Установите VPN-клиент, например Happ или V2RayTun.
-            </div>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-number">
-                2
-            </div>
-
-            <div class="step-text">
-                Выберите подходящую подписку и нажмите «Скопировать».
-            </div>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-number">
-                3
-            </div>
-
-            <div class="step-text">
-                Добавьте ссылку в разделе подписок вашего клиента.
-            </div>
-
-        </div>
-
-
-        <div class="step">
-
-            <div class="step-number">
-                4
-            </div>
-
-            <div class="step-text">
-                Обновите подписку и выберите рабочую конфигурацию.
-            </div>
-
-        </div>
-
-    </div>
-
-</div>
-
-</section><!-- APPS --><section><div class="section-header">
-
-    <h2 class="section-title">
-        📲 Клиенты
-    </h2>
-
-    <div class="section-line"></div>
-
-</div>
-
-
-<div class="apps">
-
-
-    <div class="app-card">
-
-        <div class="app-icon">
-            ⚡
-        </div>
-
-        <h3>
-            Happ
-        </h3>
-
-        <p>
-            Клиент для работы с VPN-подписками.
-        </p>
-
-        <a
-            class="app-link"
-            href="https://play.google.com/store/search?q=Happ%20VPN&c=apps"
-            target="_blank"
-            rel="noopener"
-        >
-            Открыть Google Play →
-        </a>
-
-    </div>
-
-
-    <div class="app-card">
-
-        <div class="app-icon">
-            🚀
-        </div>
-
-        <h3>
-            V2RayTun
-        </h3>
-
-        <p>
-            Клиент для подключения к конфигурациям.
-        </p>
-
-        <a
-            class="app-link"
-            href="https://play.google.com/store/search?q=V2RayTun&c=apps"
-            target="_blank"
-            rel="noopener"
-        >
-            Открыть Google Play →
-        </a>
-
-    </div>
-
-
-</div>
-
-</section><!-- SUPPORT --><section><div class="card support">
-
-    <div class="support-icon">
-        💬
-    </div>
-
-    <h2>
-        Нужна помощь?
-    </h2>
-
-    <p>
-        Если подписка не работает или конфигурация
-        не импортируется, напишите в поддержку.
-    </p>
-
-    <a
-        class="support-button"
-        href="https://t.me/Harachok"
-        target="_blank"
-        rel="noopener"
-    >
-        💬 Написать в поддержку
+    <h1>PizdukVPN</h1>
+    <p class="lede">Быстрые конфигурации. Простое подключение.</p>
+    <a class="tg" href="https://t.me/PizMod" target="_blank" rel="noopener">
+      <span class="dot"></span> Telegram · @PizMod
     </a>
+  </header>
+
+  <section>
+    <div class="section-head"><h2>Подписки</h2><div class="rule"></div></div>
+    <div class="sub-list">
+
+      <div class="sub">
+        <div class="sub-info">
+          <h3>ЧС</h3>
+          <p>Основная подписка с конфигурациями</p>
+        </div>
+        <div class="sub-actions">
+          <button class="copy-btn" onclick="copySub(this,'https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/sub.txt')">Копировать</button>
+        </div>
+      </div>
+
+      <div class="sub">
+        <div class="sub-info">
+          <h3>ЧС · Автовыбор</h3>
+          <p>Подбирает рабочую конфигурацию сама</p>
+        </div>
+        <div class="sub-actions">
+          <button class="alt-link" onclick="copySub(this,'https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/BaHapp')">альт.</button>
+          <button class="copy-btn" onclick="copySub(this,'https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/AutoPizduk.txt')">Копировать</button>
+        </div>
+      </div>
+
+      <div class="sub">
+        <div class="sub-info">
+          <h3>БС · Автовыбор</h3>
+          <p>Автоматическая подписка с конфигурациями БС</p>
+        </div>
+        <div class="sub-actions">
+          <button class="alt-link" onclick="copySub(this,'https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/WaHapp')">альт.</button>
+          <button class="copy-btn" onclick="copySub(this,'https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/WLAutoPiz.txt')">Копировать</button>
+        </div>
+      </div>
+
+      <div class="sub">
+        <div class="sub-info">
+          <h3>Миксер</h3>
+          <p>Объединяет конфигурации из других подписок в один список</p>
+        </div>
+        <div class="sub-actions">
+          <button class="copy-btn" onclick="copySub(this,'https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/Mixer')">Копировать</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Подключение</h2><div class="rule"></div></div>
+    <div class="connect-card">
+      <ul class="connect-steps">
+        <li><span class="step-i">01</span><span><b>Установите клиент</b> — Happ или V2RayTun (ниже).</span></li>
+        <li><span class="step-i">02</span><span>Скопируйте нужную подписку выше.</span></li>
+        <li><span class="step-i">03</span><span>Добавьте ссылку в разделе подписок клиента и обновите её.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head"><h2>Клиенты</h2><div class="rule"></div></div>
+    <div class="apps-row">
+      <a class="app-chip" href="https://play.google.com/store/search?q=Happ%20VPN&c=apps" target="_blank" rel="noopener">
+        <span class="name">Happ</span><span class="arrow">→</span>
+      </a>
+      <a class="app-chip" href="https://play.google.com/store/search?q=V2RayTun&c=apps" target="_blank" rel="noopener">
+        <span class="name">V2RayTun</span><span class="arrow">→</span>
+      </a>
+    </div>
+  </section>
+
+  <section>
+    <div class="support-line">
+      <p>Подписка не работает или конфигурация не импортируется?</p>
+      <a href="https://t.me/Harachok" target="_blank" rel="noopener">Написать в поддержку →</a>
+    </div>
+    <p class="notice">Конфигурации могут переставать работать — обновите подписку или выберите другую.</p>
+  </section>
+
+  <footer>
+    PizdukVPN © 2026 · <a href="https://t.me/PizMod" target="_blank" rel="noopener">Telegram @PizMod</a>
+  </footer>
 
 </div>
 
-</section><!-- NOTICE --><div class="notice"><div class="notice-icon">
-    ⚠️
-</div>
+<div class="toast" id="toast">Ссылка скопирована</div>
 
-<div>
-    Конфигурации могут переставать работать.
-    Если подключение не работает, попробуйте обновить
-    подписку или выбрать другую конфигурацию.
-</div>
-
-</div><footer><div>
-    PizdukVPN © 2026
-</div>
-
-<br>
-
-<a
-    href="https://t.me/PizMod"
-    target="_blank"
-    rel="noopener"
->
-    Telegram @PizMod
-</a>
-
-</footer></div><!-- TOAST --><div
-    class="toast"
-    id="toast"
->
-    ✅ Ссылка скопирована
-</div><script>
-
-function copySub(button, text) {
-
-    navigator.clipboard.writeText(text)
-        .then(function() {
-
-            copied(button);
-
-        })
-        .catch(function() {
-
-            const textarea =
-                document.createElement("textarea");
-
-            textarea.value = text;
-
-            textarea.style.position = "fixed";
-            textarea.style.opacity = "0";
-
-            document.body.appendChild(textarea);
-
-            textarea.focus();
-            textarea.select();
-
-            try {
-                document.execCommand("copy");
-            } catch (e) {}
-
-            textarea.remove();
-
-            copied(button);
-
-        });
+<script>
+function copySub(btn, text){
+  navigator.clipboard.writeText(text).then(function(){ copied(btn); }).catch(function(){
+    const ta = document.createElement('textarea');
+    ta.value = text; ta.style.position='fixed'; ta.style.opacity='0';
+    document.body.appendChild(ta); ta.focus(); ta.select();
+    try{ document.execCommand('copy'); }catch(e){}
+    ta.remove();
+    copied(btn);
+  });
 }
-
-
-function copied(button) {
-
-    const oldText = button.innerHTML;
-
-    button.innerHTML =
-        "✓ Скопировано";
-
-    button.classList.add("copied");
-
-    showToast();
-
-    setTimeout(function() {
-
-        button.innerHTML = oldText;
-
-        button.classList.remove("copied");
-
-    }, 1800);
+function copied(btn){
+  const old = btn.textContent;
+  const wasAlt = btn.classList.contains('alt-link');
+  btn.textContent = '✓';
+  if(!wasAlt) btn.classList.add('copied');
+  showToast();
+  setTimeout(function(){ btn.textContent = old; btn.classList.remove('copied'); }, 1400);
 }
-
-
-function showToast() {
-
-    const toast =
-        document.getElementById("toast");
-
-    toast.classList.add("show");
-
-    setTimeout(function() {
-
-        toast.classList.remove("show");
-
-    }, 2200);
+function showToast(){
+  const t = document.getElementById('toast');
+  t.classList.add('show');
+  setTimeout(function(){ t.classList.remove('show'); }, 1800);
 }
-
-</script></body>
+</script>
+</body>
 </html>
