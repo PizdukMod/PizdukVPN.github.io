@@ -45,6 +45,11 @@
       linear-gradient(90deg, rgba(63,208,255,.05) 1px, transparent 1px);
     background-size:42px 42px;
     mask-image:radial-gradient(ellipse 70% 55% at 50% 0%, black 10%, transparent 75%);
+    animation:driftGrid 26s linear infinite;
+  }
+  @keyframes driftGrid{
+    from{background-position:0 0;}
+    to{background-position:84px 84px;}
   }
 
   .wrap{width:min(100% - 32px, 640px);margin:0 auto;}
@@ -57,21 +62,31 @@
     display:flex;align-items:center;justify-content:center;
     border:1px solid var(--line-dim);
     position:relative;
+    opacity:0;
+    animation:riseIn .6s ease .05s forwards, glowPulse 3.2s ease-in-out 1s infinite;
   }
   .mark svg{width:26px;height:26px;stroke:var(--line);}
   .mark::after{
     content:"";position:absolute;inset:-1px;border-radius:15px;
     box-shadow:0 0 24px rgba(63,208,255,.25);
   }
+  @keyframes glowPulse{
+    0%,100%{box-shadow:0 0 0 1px var(--line-dim), 0 0 20px rgba(63,208,255,.12);}
+    50%{box-shadow:0 0 0 1px var(--line), 0 0 30px rgba(63,208,255,.3);}
+  }
   h1{
     font-size:clamp(32px,8vw,42px);
     font-weight:700;
     letter-spacing:-1px;
+    opacity:0;
+    animation:riseIn .6s ease .15s forwards;
   }
   .lede{
     color:var(--ink-dim);
     font-size:15px;
     margin-top:10px;
+    opacity:0;
+    animation:riseIn .6s ease .25s forwards;
   }
   .tg{
     display:inline-flex;align-items:center;gap:8px;
@@ -80,13 +95,31 @@
     border-radius:11px;
     color:var(--ink);text-decoration:none;
     font-size:13px;font-weight:600;
-    transition:border-color .2s, background .2s;
+    transition:border-color .2s, background .2s, transform .2s;
+    opacity:0;
+    animation:riseIn .6s ease .35s forwards;
   }
-  .tg:hover{border-color:var(--line-dim);background:rgba(63,208,255,.06);}
-  .tg .dot{width:6px;height:6px;border-radius:50%;background:var(--line);}
+  .tg:hover{border-color:var(--line-dim);background:rgba(63,208,255,.06);transform:translateY(-2px);}
+  .tg:active{transform:translateY(0) scale(.97);}
+  .tg .dot{width:6px;height:6px;border-radius:50%;background:var(--line);animation:blink 2s ease-in-out infinite;}
+
+  @keyframes riseIn{
+    from{opacity:0;transform:translateY(10px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  @keyframes blink{
+    0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(63,208,255,.5);}
+    50%{opacity:.5;box-shadow:0 0 0 4px rgba(63,208,255,0);}
+  }
 
   /* SECTIONS */
   section{margin-top:44px;}
+  section.reveal{
+    opacity:0;
+    transform:translateY(16px);
+    transition:opacity .6s ease, transform .6s ease;
+  }
+  section.reveal.in{opacity:1;transform:translateY(0);}
   .section-head{
     display:flex;align-items:baseline;gap:12px;
     margin-bottom:14px;
@@ -96,6 +129,12 @@
 
   /* SUBSCRIPTION LIST */
   .sub-list{display:flex;flex-direction:column;gap:10px;}
+  .sub{opacity:0;animation:riseIn .5s ease forwards;}
+  .sub:nth-child(1){animation-delay:.05s;}
+  .sub:nth-child(2){animation-delay:.12s;}
+  .sub:nth-child(3){animation-delay:.19s;}
+  .sub:nth-child(4){animation-delay:.26s;}
+  .sub:nth-child(5){animation-delay:.33s;}
   .sub{
     border:1px solid var(--card-line);
     border-radius:var(--radius);
@@ -104,6 +143,12 @@
     display:flex;
     align-items:center;
     gap:14px;
+    transition:border-color .25s, transform .25s, box-shadow .25s;
+  }
+  .sub:hover{
+    border-color:var(--line-dim);
+    transform:translateY(-3px);
+    box-shadow:0 14px 34px rgba(0,0,0,.35), 0 0 0 1px rgba(63,208,255,.08);
   }
   .sub-info{flex:1;min-width:0;}
   .sub-info h3{font-size:15px;font-weight:600;}
@@ -118,10 +163,19 @@
     font:inherit;font-size:12.5px;font-weight:600;
     cursor:pointer;
     white-space:nowrap;
-    transition:border-color .2s, background .2s, color .2s;
+    transition:border-color .2s, background .2s, color .2s, transform .15s;
   }
   .copy-btn:hover{border-color:var(--line-dim);background:rgba(63,208,255,.08);}
-  .copy-btn.copied{background:var(--line);border-color:var(--line);color:#03131a;}
+  .copy-btn:active{transform:scale(.94);}
+  .copy-btn.copied{
+    background:var(--line);border-color:var(--line);color:#03131a;
+    animation:popCheck .35s ease;
+  }
+  @keyframes popCheck{
+    0%{transform:scale(1);}
+    40%{transform:scale(1.12);}
+    100%{transform:scale(1);}
+  }
   .alt-link{
     font-size:11.5px;color:var(--ink-dim);
     text-decoration:underline;text-underline-offset:2px;
@@ -164,11 +218,13 @@
     padding:13px 15px;
     text-decoration:none;
     color:var(--ink);
-    transition:border-color .2s, background .2s;
+    transition:border-color .2s, background .2s, transform .2s;
   }
-  .app-chip:hover{border-color:var(--line-dim);background:rgba(63,208,255,.06);}
+  .app-chip:hover{border-color:var(--line-dim);background:rgba(63,208,255,.06);transform:translateY(-2px);}
+  .app-chip:active{transform:translateY(0) scale(.97);}
   .app-chip span.name{font-size:13.5px;font-weight:600;}
-  .app-chip span.arrow{margin-left:auto;color:var(--ink-dim);font-size:14px;}
+  .app-chip span.arrow{margin-left:auto;color:var(--ink-dim);font-size:14px;transition:transform .2s;}
+  .app-chip:hover span.arrow{transform:translateX(3px);}
 
   /* SUPPORT — single line, no separate button block */
   .support-line{
@@ -239,7 +295,7 @@
     </a>
   </header>
 
-  <section>
+  <section class="reveal">
     <div class="section-head"><h2>Подписки</h2><div class="rule"></div></div>
     <div class="sub-list">
 
@@ -298,7 +354,7 @@
     </div>
   </section>
 
-  <section>
+  <section class="reveal">
     <div class="section-head"><h2>Подключение</h2><div class="rule"></div></div>
     <div class="connect-card">
       <ul class="connect-steps">
@@ -309,7 +365,7 @@
     </div>
   </section>
 
-  <section>
+  <section class="reveal">
     <div class="section-head"><h2>Клиенты</h2><div class="rule"></div></div>
     <div class="apps-row">
       <a class="app-chip" href="https://play.google.com/store/search?q=Happ%20VPN&c=apps" target="_blank" rel="noopener">
@@ -321,7 +377,7 @@
     </div>
   </section>
 
-  <section>
+  <section class="reveal">
     <div class="support-line">
       <p>Подписка не работает или конфигурация не импортируется?</p>
       <a href="https://t.me/Harachok" target="_blank" rel="noopener">Написать в поддержку →</a>
@@ -360,6 +416,17 @@ function showToast(){
   const t = document.getElementById('toast');
   t.classList.add('show');
   setTimeout(function(){ t.classList.remove('show'); }, 1800);
+}
+
+if('IntersectionObserver' in window){
+  const io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); }
+    });
+  }, {threshold:.15, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('section.reveal').forEach(function(s){ io.observe(s); });
+} else {
+  document.querySelectorAll('section.reveal').forEach(function(s){ s.classList.add('in'); });
 }
 </script>
 </body>
