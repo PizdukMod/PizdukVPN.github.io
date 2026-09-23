@@ -124,21 +124,6 @@
       opacity: .9;
     }
 
-    .secondary {
-      background: #292929;
-      color: #fff;
-    }
-
-    .subscription {
-      font-size: 12px;
-      color: #777;
-      word-break: break-all;
-      margin-top: 12px;
-      padding: 10px;
-      border-radius: 10px;
-      background: rgba(0,0,0,.3);
-    }
-
     .step {
       display: flex;
       gap: 15px;
@@ -192,8 +177,7 @@
         padding: 18px;
       }
 
-      button,
-      .button {
+      button {
         width: 100%;
         text-align: center;
       }
@@ -211,6 +195,7 @@
 
   </header>  <section><h2 class="section-title">📡 Подписки</h2>
 
+
 <div class="card">
   <h3>🏴 PizdukVPN ЧС</h3>
 
@@ -222,16 +207,6 @@
     <button onclick="copySub('https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/sub.txt')">
       📋 Скопировать
     </button>
-
-    <a class="button secondary"
-       href="https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/sub.txt"
-       target="_blank">
-      🔗 Открыть
-    </a>
-  </div>
-
-  <div class="subscription">
-    https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/sub.txt
   </div>
 </div>
 
@@ -247,16 +222,21 @@
     <button onclick="copySub('https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/AutoPizduk.txt')">
       📋 Скопировать
     </button>
-
-    <a class="button secondary"
-       href="https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/AutoPizduk.txt"
-       target="_blank">
-      🔗 Открыть
-    </a>
   </div>
+</div>
 
-  <div class="subscription">
-    https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/AutoPizduk.txt
+
+<div class="card">
+  <h3>🏴📲 ЧС-Автовыбор (Альт)</h3>
+
+  <p>
+    Альтернативная ссылка для тех, у кого не работает обычная.
+  </p>
+
+  <div class="buttons">
+    <button onclick="copySub('https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/BaHapp')">
+      📋 Скопировать
+    </button>
   </div>
 </div>
 
@@ -272,16 +252,21 @@
     <button onclick="copySub('https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/WLAutoPiz.txt')">
       📋 Скопировать
     </button>
-
-    <a class="button secondary"
-       href="https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/WLAutoPiz.txt"
-       target="_blank">
-      🔗 Открыть
-    </a>
   </div>
+</div>
 
-  <div class="subscription">
-    https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/WLAutoPiz.txt
+
+<div class="card">
+  <h3>🏳📲 БС-АвтоВыбор (Альт)</h3>
+
+  <p>
+    Альтернативная ссылка для тех, у кого не работает обычная.
+  </p>
+
+  <div class="buttons">
+    <button onclick="copySub('https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/WaHapp')">
+      📋 Скопировать
+    </button>
   </div>
 </div>
 
@@ -297,16 +282,6 @@
     <button onclick="copySub('https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/Mixer')">
       📋 Скопировать
     </button>
-
-    <a class="button secondary"
-       href="https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/Mixer"
-       target="_blank">
-      🔗 Открыть
-    </a>
-  </div>
-
-  <div class="subscription">
-    https://gitverse.ru/api/repos/Pizduk/PizdukVPN/raw/branch/master/Mixer
   </div>
 </div>
 
@@ -404,12 +379,12 @@
     ⚠️ Конфигурации могут переставать работать.
     При проблемах попробуйте обновить подписку или выбрать другую конфигурацию.
   </div>  <footer>
-    PizdukVPN © 2026<br>
-    <a href="https://t.me/PizMod"
-       target="_blank"
-       style="color:#888;">
-      Telegram @PizMod
-    </a>
+    PizdukVPN © 2026<br><a href="https://t.me/PizMod"
+   target="_blank"
+   style="color:#888;">
+  Telegram @PizMod
+</a>
+
   </footer></div><script>
   function copySub(text) {
     navigator.clipboard.writeText(text).then(() => {
